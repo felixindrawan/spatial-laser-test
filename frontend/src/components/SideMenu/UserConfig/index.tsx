@@ -58,7 +58,7 @@ export default function UserConfig() {
           value={showCentroids}
           onChange={handleShowCentroidsToggle}
           control={<Checkbox />}
-          label="Show Centroids"
+          label="Show centroid for each feature"
         />
       </Grid>
       <Grid item xs={12}>
