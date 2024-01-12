@@ -1,8 +1,8 @@
 const request = require('supertest');
 const express = require('express');
 const router = require('./index');
-
 const pool = require('../../db')
+
 const app = express();
 app.use(express.json());
 app.use('/results-data', router);
@@ -131,5 +131,9 @@ describe ("POST /results-data - Areal Proportion Method", () => {
     expect(response.statusCode).toBe(200);
     expect(Number(response.body.totalPopulation)).toBeCloseTo(expectedPercentageOfPopulation)
     expect(Number(response.body.avgIncome)).toBeCloseTo(expectedPercentageOfAvgIncome)
+  })
+
+  afterAll(async () => {
+    await pool.end();
   })
 })

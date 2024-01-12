@@ -55,3 +55,8 @@ To run tests, run
 ```
 npm run test
 ```
+
+To see testing coverage report, run
+```
+npm run test --coverage
+```
