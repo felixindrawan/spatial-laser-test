@@ -5,6 +5,7 @@ import {
   Typography,
   Icon,
   Grid,
+  Tooltip,
 } from "@mui/material";
 import { CSSProperties } from "react";
 import UserConfig from "./UserConfig";
@@ -20,25 +21,16 @@ export default function SideMenu() {
             <Grid item xs={10}>
               <Typography variant="h5">Demographic Harvesting</Typography>
             </Grid>
-            <Grid
-              item
-              xs={2}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "flex-end",
-              }}
-            >
-              <Icon className="handle" style={{ cursor: "pointer" }}>
-                <img
-                  src="https://cdn-icons-png.flaticon.com/512/2926/2926236.png"
-                  alt="drag-icon"
-                  style={{
-                    height: "100%",
-                    pointerEvents: "none",
-                  }}
-                />
-              </Icon>
+            <Grid item xs={2} style={STYLES.dragIconContainer}>
+              <Tooltip title="Drag and move this window!" placement="top">
+                <Icon className="handle" style={{ cursor: "pointer" }}>
+                  <img
+                    src="https://cdn-icons-png.flaticon.com/512/2926/2926236.png"
+                    alt="drag-icon"
+                    style={STYLES.iconImg}
+                  />
+                </Icon>
+              </Tooltip>
             </Grid>
             <Typography>by Felix Indrawan</Typography>
           </Grid>
@@ -70,5 +62,14 @@ const STYLES: {
     display: "flex",
     flexDirection: "column",
     gap: 20,
+  },
+  dragIconContainer: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "flex-end",
+  },
+  iconImg: {
+    height: "100%",
+    pointerEvents: "none",
   },
 };
