@@ -25,18 +25,11 @@ TABLE_NAME=
 * Docker Desktop (on Windows)  
 * Docker compose
 
-### Installing
-
-* Run `docker build -t felix-indrawan-spatial-laser-backend .`
-* Run `docker-compose up`
-* This will create an endpoint on [http://localhost:13000](http://localhost:13000) to retrieve the data from.
-
-### Executing program
-
+### Executing program Locally
 * Launch Docker Desktop, ensuring Daemon is running
 * In the terminal, build the image with the code below (Note that image name can be changed in the [docker-compose.yml](./docker-compose.yml))
 ```
-docker build -t felix-indrawan-spatial-laser-backend
+docker build -t felixindrawan-spatiallaser-backend .
 ```
 * Afterwards, in the terminal, launch the server in the container with the code below 
 ```

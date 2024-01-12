@@ -8,6 +8,6 @@ services:
       POSTGRES_USER: ${DB_USERNAME}
       POSTGRES_DB: ${DB_NAME}
   app:
-    image: felix-indrawan-spatial-laser-backend
+    image: felixindrawan-spatiallaser-backend
     ports:
       - 13000:1338
