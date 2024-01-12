@@ -46,3 +46,12 @@ docker ps
 heroku container:push web
 heroku container:release web
 ```
+
+### Testing
+I've created a basic test with Jest and Supertest to ensure the calculations I've done in the backend is correct.
+I'm still learning more about creating better tests which is why the code can still be improved in the future.
+
+To run tests, run
+```
+npm run test
+```
