@@ -8,7 +8,14 @@ export default function MenuCardHeader({
 }) {
   return (
     <Grid container>
-      <Grid item container xs={12} spacing={2} marginBottom={1}>
+      <Grid
+        item
+        container
+        xs={12}
+        spacing={2}
+        marginBottom={1}
+        justifyContent={"flex-end"}
+      >
         <Grid item>
           <Tooltip
             title="Drag and move this window!"

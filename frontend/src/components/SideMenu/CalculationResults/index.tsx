@@ -1,5 +1,5 @@
 import { Grid, Typography } from "@mui/material";
-import { USDollar, decimalsFormat } from "../../../utils/NumberTransform";
+import { USDollar } from "../../../utils/NumberTransform";
 import { useCalculation } from "../../../hooks/useCalculation";
 
 export default function CalculationResults() {
@@ -12,7 +12,7 @@ export default function CalculationResults() {
       </Grid>
       <Grid item xs={12}>
         <Typography>Total Population</Typography>
-        <Typography>{decimalsFormat(totalPopulation ?? 0)}</Typography>
+        <Typography>{Math.round(totalPopulation ?? 0)}</Typography>
       </Grid>
       <Grid item xs={12}>
         <Typography>Average Income</Typography>
