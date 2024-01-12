@@ -1,18 +1,37 @@
-# Getting Started with Create React App
+# Spatial Laser Test Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Frontend of the Spatial Laser Test
 
-## Environment Variables
+## Getting Started
+
+### Environment Variables
+
 Please create a `.env` file inside `/frontend`
 ```
 REACT_APP_BACKEND_API_URL=
 ```
 
+### Dependencies
+
+* Node
+* Backend service is running
+
+### Installing
+
+Run `npm install`
+
+### Executing program
+
+* Ensure the backend service is running (See [/backend](../backend))
+* Start the app in the development mode with the code below in the terminal. This w
+```
+npm start
+```
+* Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+
+=====================================
+
 ## Available Scripts
-
-In the project directory, you can run:
-
-### `npm install`
 
 ### `npm start`
 

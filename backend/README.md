@@ -23,22 +23,23 @@ TABLE_NAME=
 * Built on Windows 11
 * Node
 * Docker Desktop (on Windows)  
+* Docker compose
 
 ### Installing
 
 * Run `docker build -t felix-indrawan-spatial-laser-backend .`
 * Run `docker-compose up`
-* This will create an endpoint on `http://localhost:13000` to retrieve the data from.
+* This will create an endpoint on [http://localhost:13000](http://localhost:13000) to retrieve the data from.
 
 ### Executing program
 
-* How to run the program
-* Step-by-step bullets
+* Launch Docker Desktop, ensuring Daemon is running
+* In the terminal, build the image with the code below (Note that image name can be changed in the [docker-compose.yml](./docker-compose.yml))
 ```
-code blocks for commands
+docker build -t felix-indrawan-spatial-laser-backend
 ```
-
-## Help
-
-### Cross-Origin Request Blocked: The Same Origin Policy disallows reading the remote resource at http://localhost:1338/data. (Reason: CORS request did not succeed). Status code: (null).
-- 
+* Afterwards, in the terminal, launch the server in the container with the code below 
+```
+docker-compose up
+```
+* Backend server will be launched under the port `13000`. (Note that this port can be changed in the [docker-compose.yml](./docker-compose.yml))
