@@ -4,7 +4,7 @@ require('dotenv').config()
 const express = require('express')
 const cors = require('cors');
 const pool = require('./db')
-const port = 1338
+const port = process.env.APP_PORT_NUMBER
 
 const queries = require('./functions/queries')
 
