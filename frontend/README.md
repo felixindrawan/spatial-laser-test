@@ -74,6 +74,5 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 
 ### Deploy with Heroku
 ```
-git:remote -a spatiallaser-test-frontend
-git subtree push --prefix frontend heroku main
+heroku git:remote -a spatiallaser-test-frontend
 ```

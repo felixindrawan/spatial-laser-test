@@ -40,6 +40,8 @@ docker-compose up
 
 ### Deploy with Heroku
 ```
-git:remote -a spatiallaser-test-backend
-git subtree push --prefix backend heroku main
+heroku git:remote -a spatiallaser-test-backend
+docker ps
+heroku container:push web
+heroku container:release web
 ```

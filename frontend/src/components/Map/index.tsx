@@ -32,7 +32,11 @@ export default function Map() {
   );
 
   if (mapError) {
-    return <ErrorAlert title="Failed to load Map" message={mapError} />;
+    return (
+      <div style={{ height: "100vh" }}>
+        <ErrorAlert title="Failed to load Map" message={mapError} />
+      </div>
+    );
   }
 
   if (mapLoading || !centerOfFeatures) {
