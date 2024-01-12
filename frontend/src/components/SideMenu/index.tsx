@@ -1,44 +1,28 @@
-import {
-  Card,
-  CardContent,
-  Divider,
-  Typography,
-  Icon,
-  Grid,
-  Tooltip,
-} from "@mui/material";
-import { CSSProperties } from "react";
+import { Card, CardContent, Divider } from "@mui/material";
+import { CSSProperties, useCallback, useState } from "react";
 import UserConfig from "./UserConfig";
 import CalculationResults from "./CalculationResults";
 import Draggable from "react-draggable";
+import MenuCardHeader from "./MenuCardHeader";
 
 export default function SideMenu() {
+  const [minimized, setMinimized] = useState(false);
+  const handleMinimizedToggle = useCallback(() => {
+    setMinimized(!minimized);
+  }, [minimized]);
   return (
     <Draggable bounds="body" handle=".handle">
       <Card style={STYLES.container}>
         <CardContent style={STYLES.content}>
-          <Grid container>
-            <Grid item xs={10}>
-              <Typography variant="h5">Demographic Harvesting</Typography>
-            </Grid>
-            <Grid item xs={2} style={STYLES.dragIconContainer}>
-              <Tooltip title="Drag and move this window!" placement="top">
-                <Icon className="handle" style={{ cursor: "pointer" }}>
-                  <img
-                    src="https://cdn-icons-png.flaticon.com/512/2926/2926236.png"
-                    alt="drag-icon"
-                    style={STYLES.iconImg}
-                  />
-                </Icon>
-              </Tooltip>
-            </Grid>
-            <Typography>by Felix Indrawan</Typography>
-          </Grid>
-
-          <Divider />
-          <UserConfig />
-          <Divider />
-          <CalculationResults />
+          <MenuCardHeader toggleMinimized={handleMinimizedToggle} />
+          {!minimized && (
+            <>
+              <Divider />
+              <UserConfig />
+              <Divider />
+              <CalculationResults />
+            </>
+          )}
         </CardContent>
       </Card>
     </Draggable>
@@ -62,14 +46,5 @@ const STYLES: {
     display: "flex",
     flexDirection: "column",
     gap: 20,
-  },
-  dragIconContainer: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "flex-end",
-  },
-  iconImg: {
-    height: "100%",
-    pointerEvents: "none",
   },
 };

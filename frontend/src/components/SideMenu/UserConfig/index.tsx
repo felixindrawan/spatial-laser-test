@@ -9,7 +9,7 @@ import {
   Radio,
   Button,
   RadioGroup,
-  Checkbox,
+  Switch,
 } from "@mui/material";
 import { METHODS, Method } from "../../../consts/MapConfigs";
 
@@ -53,12 +53,11 @@ export default function UserConfig() {
       </Grid>
       <Grid item xs={12}>
         <Typography>Display</Typography>
-
-        <FormControlLabel
-          value={showCentroids}
+        Show centroid for each feature
+        <Switch
+          checked={showCentroids}
           onChange={handleShowCentroidsToggle}
-          control={<Checkbox />}
-          label="Show centroid for each feature"
+          inputProps={{ "aria-label": "controlled" }}
         />
       </Grid>
       <Grid item xs={12}>
