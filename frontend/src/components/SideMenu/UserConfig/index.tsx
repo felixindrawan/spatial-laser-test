@@ -52,16 +52,9 @@ export default function UserConfig() {
         <Typography variant="h5">Configs</Typography>
       </Grid>
       <Grid item xs={12}>
-        <Typography>Display</Typography>
-        Show centroid for each feature
-        <Switch
-          checked={showCentroids}
-          onChange={handleShowCentroidsToggle}
-          inputProps={{ "aria-label": "controlled" }}
-        />
-      </Grid>
-      <Grid item xs={12}>
-        <Typography>Method</Typography>
+        <Typography>
+          <b>Method of Calculation</b>
+        </Typography>
         <RadioGroup
           aria-labelledby="method-radio-buttons"
           name="radio-buttons-group"
@@ -78,8 +71,23 @@ export default function UserConfig() {
           ))}
         </RadioGroup>
       </Grid>
+      {methodOfCalculation === Method.CENTROID_BASED_METHOD && (
+        <Grid item xs={12}>
+          <Typography>
+            <b>Display</b>
+          </Typography>
+          Show centroid for each feature
+          <Switch
+            checked={showCentroids}
+            onChange={handleShowCentroidsToggle}
+            inputProps={{ "aria-label": "controlled" }}
+          />
+        </Grid>
+      )}
       <Grid item xs={12}>
-        <Typography>Radius (in meters)</Typography>
+        <Typography>
+          <b>Radius (in meters)</b>
+        </Typography>
         <Grid container spacing={2} alignItems="center">
           <Grid xs={8} item>
             <Slider

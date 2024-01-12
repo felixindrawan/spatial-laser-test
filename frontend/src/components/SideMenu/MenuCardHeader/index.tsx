@@ -1,5 +1,6 @@
-import { Typography, Icon, Grid, Tooltip } from "@mui/material";
+import { Icon, Grid, Tooltip } from "@mui/material";
 import { CSSProperties } from "react";
+import CalculationResults from "../CalculationResults";
 
 export default function MenuCardHeader({
   toggleMinimized,
@@ -8,14 +9,10 @@ export default function MenuCardHeader({
 }) {
   return (
     <Grid container>
-      <Grid
-        item
-        container
-        xs={12}
-        spacing={2}
-        marginBottom={1}
-        justifyContent={"flex-end"}
-      >
+      <Grid item xs={9}>
+        <CalculationResults />
+      </Grid>
+      <Grid item container xs={3} spacing={2}>
         <Grid item>
           <Tooltip
             title="Drag and move this window!"
@@ -47,10 +44,6 @@ export default function MenuCardHeader({
           </Tooltip>
         </Grid>
       </Grid>
-      <Grid item xs={12}>
-        <Typography variant="h5">Demographic Harvesting</Typography>
-      </Grid>
-      <Typography>by Felix Indrawan</Typography>
     </Grid>
   );
 }

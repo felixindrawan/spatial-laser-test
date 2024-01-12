@@ -1,7 +1,6 @@
 import { Card, CardContent, Divider } from "@mui/material";
 import { CSSProperties, useCallback, useState } from "react";
 import UserConfig from "./UserConfig";
-import CalculationResults from "./CalculationResults";
 import Draggable from "react-draggable";
 import MenuCardHeader from "./MenuCardHeader";
 
@@ -19,8 +18,6 @@ export default function SideMenu() {
             <>
               <Divider />
               <UserConfig />
-              <Divider />
-              <CalculationResults />
             </>
           )}
         </CardContent>

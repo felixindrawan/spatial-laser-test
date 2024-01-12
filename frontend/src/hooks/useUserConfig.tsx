@@ -46,6 +46,9 @@ export function UserConfigProvider({ children }: { children: ReactNode }) {
   const handleMethodChange = useCallback(
     (newMethod: Method) => {
       setMethodOfCalculation(newMethod);
+      if (newMethod === Method.AREAL_PROPORTION_METHOD) {
+        setShowCentroids(false);
+      }
       if (position) {
         handleResultsChange(newMethod, radius, position);
       }

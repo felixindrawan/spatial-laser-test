@@ -8,14 +8,18 @@ export default function CalculationResults() {
   return (
     <Grid container spacing={2}>
       <Grid item xs={12}>
-        <Typography variant="h5">Results</Typography>
+        <Typography variant="h5">Census Data</Typography>
       </Grid>
       <Grid item xs={12}>
-        <Typography>Total Population</Typography>
+        <Typography>
+          <b>Total Population</b>
+        </Typography>
         <Typography>{Math.round(totalPopulation ?? 0)}</Typography>
       </Grid>
       <Grid item xs={12}>
-        <Typography>Average Income</Typography>
+        <Typography>
+          <b>Average Income</b>
+        </Typography>
         <Typography>{USDollar.format(avgIncome ?? 0)}</Typography>
       </Grid>
     </Grid>
