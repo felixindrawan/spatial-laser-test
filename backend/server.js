@@ -53,8 +53,6 @@ app.get('/region-data', async (req, res) => {
 app.post('/results-data', async (req, res) => {
   try {
     const {radius, position, calculationMethod} = req.body;
-    console.log(req.body)
-
     // query to create the user's circle in PostGIS
     const userCircle = `
       ST_Buffer(

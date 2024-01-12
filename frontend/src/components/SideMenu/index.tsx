@@ -3,7 +3,8 @@ import {
   CardContent,
   Divider,
   Typography,
-  CardHeader,
+  Icon,
+  Grid,
 } from "@mui/material";
 import { CSSProperties } from "react";
 import UserConfig from "./UserConfig";
@@ -12,13 +13,36 @@ import Draggable from "react-draggable";
 
 export default function SideMenu() {
   return (
-    <Draggable bounds="body">
+    <Draggable bounds="body" handle=".handle">
       <Card style={STYLES.container}>
         <CardContent style={STYLES.content}>
-          <div>
-            <Typography variant="h5">Demographic Harvesting</Typography>
+          <Grid container>
+            <Grid item xs={10}>
+              <Typography variant="h5">Demographic Harvesting</Typography>
+            </Grid>
+            <Grid
+              item
+              xs={2}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "flex-end",
+              }}
+            >
+              <Icon className="handle" style={{ cursor: "pointer" }}>
+                <img
+                  src="https://cdn-icons-png.flaticon.com/512/2926/2926236.png"
+                  alt="drag-icon"
+                  style={{
+                    height: "100%",
+                    pointerEvents: "none",
+                  }}
+                />
+              </Icon>
+            </Grid>
             <Typography>by Felix Indrawan</Typography>
-          </div>
+          </Grid>
+
           <Divider />
           <UserConfig />
           <Divider />
