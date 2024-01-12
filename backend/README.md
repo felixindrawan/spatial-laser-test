@@ -36,3 +36,9 @@ docker build -t felixindrawan-spatiallaser-backend .
 docker-compose up
 ```
 * Backend server will be launched under the port `13000`. (Note that this port can be changed in the [docker-compose.yml](./docker-compose.yml))
+
+### Deploy with Heroku
+```
+git:remote -a spatiallaser-test-backend
+git subtree push --prefix backend heroku main
+```
