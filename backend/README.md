@@ -39,6 +39,7 @@ docker-compose up
 * Backend server will be launched under the port `13000`. (Note that this port can be changed in the [docker-compose.yml](./docker-compose.yml))
 
 ### Deploy with Heroku
+Need to use the container registry on Heroku, bc the deployment buildpack doesn't work for container stack
 ```
 heroku git:remote -a spatiallaser-test-backend
 docker ps

@@ -23,7 +23,7 @@ Run `npm install`
 ### Executing program
 
 * Ensure the backend service is running (See [/backend](../backend))
-* Start the app in the development mode with the code below in the terminal. This w
+* Run the app with the code below
 ```
 npm start
 ```
@@ -73,6 +73,7 @@ You can learn more in the [Create React App documentation](https://facebook.gith
 To learn React, check out the [React documentation](https://reactjs.org/).
 
 ### Deploy with Heroku
+Auto-deployment is already setup on Heroku console
 ```
 heroku git:remote -a spatiallaser-test-frontend
 ```
