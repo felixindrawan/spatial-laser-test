@@ -4,6 +4,6 @@ export const CircleConfig = {
 };
 
 export const CircleDefaults = {
-  CIRCLE_RADIUS: 500,
+  CIRCLE_RADIUS: 3000,
   CIRCLE_POSITION: undefined,
 };
