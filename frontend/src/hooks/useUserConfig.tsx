@@ -47,6 +47,7 @@ export function UserConfigProvider({ children }: { children: ReactNode }) {
   const handleMethodChange = useCallback(
     (newMethod: Method) => {
       setMethodOfCalculation(newMethod);
+      // Only show centroids on Method.CENTROID_BASED_METHOD  (See README.md/Business Logic #1)
       if (newMethod === Method.AREAL_PROPORTION_METHOD) {
         setShowCentroids(false);
       }

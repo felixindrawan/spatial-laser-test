@@ -29,7 +29,22 @@ npm start
 ```
 * Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
+### Deploy with Heroku
+Currently already setup with automatic deployments.
+
+Note to self: I had to use create-react-app buildpack, and subdir buildpack.
+Also, create-react-app buildpack only works on heroku-20 or lower 
+
+### Business Logic
+1. `components/SideMenu/UserConfig` - Show option to display `centroids` on features
+We only want to show the option to show `centroids` on features when the user chooses `Method.CENTROID_BASED_METHOD` as `centroids` are not used for `Method.AREAL_PROPORTION_METHOD`
+2. `components/Map` - Displaying the user circle
+Goal: Display circle similar to the examples shown in the `Take Home Test Instructions.pdf`.
+* On `Method.AREAL_PROPORTION_METHOD`, we want to show the circle with an opacity
+* On `Method.CENTROID_BASED_METHOD`, the circle should only show the stroke, and any features that has their centroids inside the circle will be highlighted
+
 =====================================
+
 
 ## Available Scripts
 
