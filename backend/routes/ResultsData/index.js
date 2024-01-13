@@ -1,4 +1,4 @@
-const queries = require('../../functions/queries')
+const queries = require('./queries')
 const pool = require('../../db')
 const express = require('express');
 const router = express.Router()
@@ -7,15 +7,13 @@ const router = express.Router()
 router.post('/', async (req, res) => {
   try {
     const {radius, position, calculationMethod} = req.body;
-    // query to create the user's circle in PostGIS
-    const userCircle = `
-      ST_Buffer(
-        ST_MakePoint(${position.lng}, ${position.lat}):: geography,
-        ${radius}
-      )::geometry
-    `
+
+    // Create a circle geometry
+    const userCircle = queries.getUserCircle(position.lng, position.lat, radius);
+
     let totalPopulation = 0;
     let avgIncome = 0;
+
     if (calculationMethod === "centroidBasedMethod") {
       const query = queries.getCentroidBasedMethodQuery(userCircle)
       const { rows } = await pool.query(query)
@@ -25,6 +23,7 @@ router.post('/', async (req, res) => {
     } else if (calculationMethod === "arealProportionMethod") {
       const query = queries.getArealProportionMethodQuery(userCircle)
       const { rows } = await pool.query(query)
+
       totalPopulation = rows[0].total_population;
       avgIncome = rows[0].avg_income
     }    

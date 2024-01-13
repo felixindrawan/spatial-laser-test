@@ -1,3 +1,12 @@
+function getUserCircle(lng, lat, radius) {
+  return `
+    ST_Buffer(
+      ST_MakePoint(${lng}, ${lat}):: geography,
+      ${radius}
+    )::geometry
+  `
+}
+
 // Returns the percentage of the area of the feature intersecting the circle
 // i.e. how much of the feature is covered by the circle
 function  getPercentageOfIntersection (userCircle) {
@@ -69,7 +78,9 @@ function getCentroidBasedMethodQuery(userCircle) {
 }
 
 module.exports = {
+  getUserCircle,
   getArealProportionMethodQuery,
   getCentroidBasedMethodQuery,
+  getTotalPopulationInAnIntersection,
   getPercentageOfIntersection
 }
