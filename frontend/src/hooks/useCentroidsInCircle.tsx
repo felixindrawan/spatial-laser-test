@@ -12,10 +12,12 @@ import {
 type CentroidsInCircleContextProps = {
   featuresInCircle?: GeoJsonObject;
   handleCircleUpdate: (position: LatLng, radius: number) => void;
+  handleFeaturesInCircleReset: () => void;
 };
 
 const CentroidsInCircleContext = createContext<CentroidsInCircleContextProps>({
   handleCircleUpdate: () => {},
+  handleFeaturesInCircleReset: () => {},
 });
 
 export function CentroidsInCircleProvider({
@@ -24,6 +26,9 @@ export function CentroidsInCircleProvider({
   children: ReactNode;
 }) {
   const [featuresInCircle, setFeaturesInCircle] = useState<GeoJsonObject>();
+  const handleFeaturesInCircleReset = useCallback(() => {
+    setFeaturesInCircle(undefined);
+  }, []);
 
   // On user circle updating, we need to update the keys
   const handleCircleUpdate = useCallback(
@@ -56,8 +61,9 @@ export function CentroidsInCircleProvider({
     () => ({
       featuresInCircle,
       handleCircleUpdate,
+      handleFeaturesInCircleReset,
     }),
-    [featuresInCircle, handleCircleUpdate]
+    [featuresInCircle, handleCircleUpdate, handleFeaturesInCircleReset]
   );
   return (
     <CentroidsInCircleContext.Provider value={context}>

@@ -25,10 +25,12 @@ export default function Map() {
     handlePositionChange,
     methodOfCalculation,
   } = useUserConfig();
-  const { featuresInCircle } = useCentroidsInCircle();
+  const { featuresInCircle, handleFeaturesInCircleReset } =
+    useCentroidsInCircle();
 
   const onMapClick = useCallback(
     (coordinates: LatLng) => {
+      handleFeaturesInCircleReset();
       handlePositionChange(coordinates);
     },
     [handlePositionChange]
@@ -58,7 +60,6 @@ export default function Map() {
     iconSize: [12, 12],
   });
 
-  console.log("here22", featuresInCircle);
   return (
     <div style={{ height: MapConfigs.MAP_HEIGHT }}>
       <MapContainer
@@ -71,13 +72,12 @@ export default function Map() {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        {/* {featuresInCircle && (
+        {featuresInCircle && (
           <GeoJSON
             data={featuresInCircle}
             style={{ fill: true, color: "black" }}
           />
-        )} */}
-
+        )}
         {mapFeatures && <GeoJSON data={mapFeatures} />}
         <MapClick onMapClick={onMapClick} />
         {showCentroids &&
