@@ -7,8 +7,9 @@ import {
   useMemo,
   useState,
 } from "react";
-import { CircleDefaults, Method } from "../consts/MapConfigs";
+import { Method } from "../consts/MapConfigs";
 import { useCalculation } from "./useCalculation";
+import { CircleDefaults } from "../consts/UserRadius";
 
 type UserConfigContextProps = {
   currentRadius: number;
@@ -34,7 +35,7 @@ const UserConfigContext = createContext<UserConfigContextProps>({
 });
 
 export function UserConfigProvider({ children }: { children: ReactNode }) {
-  const [radius, setRadius] = useState<number>(50); // In meters
+  const [radius, setRadius] = useState<number>(CircleDefaults.CIRCLE_RADIUS); // In meters
   const [position, setPosition] = useState<LatLng>();
   const [methodOfCalculation, setMethodOfCalculation] = useState<Method>(
     Method.CENTROID_BASED_METHOD

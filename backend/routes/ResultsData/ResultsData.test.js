@@ -85,7 +85,7 @@ describe ("POST /results-data - Centroid Based Method", () => {
   })
 })
 
-const { getPercentageOfIntersectionQuery } = require('../../functions/queries')
+const { getPercentageOfIntersection } = require('../../functions/queries')
 
 describe ("POST /results-data - Areal Proportion Method", () => {
   it(`should return the correct totalPopulation and avgIncome based on mockDataFeatureOne`,
@@ -106,14 +106,10 @@ describe ("POST /results-data - Areal Proportion Method", () => {
       )::geometry
     `
     // Get the intersecting percentage  
-    const percentageIntersectingQuery = getPercentageOfIntersectionQuery(userCircle)
-    const { rows } = await pool.query(`
-        SELECT 
-          ${percentageIntersectingQuery}
-        FROM ${process.env.TABLE_NAME}
-        WHERE ST_Intersects("spatialobj", ${userCircle})
-        `)
+    const { rows } = await pool.query(getPercentageOfIntersection(userCircle))
     const percentage = rows[0].intersection_percentage
+
+    console.log(percentage)
     // Get the expected population and the average income
     const mockData = {
       income: mockDataFeatureOne.properties.income,

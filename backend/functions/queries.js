@@ -1,38 +1,37 @@
 // Returns the percentage of the area of the feature intersecting the circle
 // i.e. how much of the feature is covered by the circle
-function getPercentageOfIntersectionQuery(userCircle) {
+function  getPercentageOfIntersection (userCircle) {
   return `
-  (
-    ST_Area(
-      ST_Intersection("spatialobj", ${userCircle})
-    ) / ST_Area("spatialobj")
-  ) * 100 AS intersection_percentage
+    SELECT 
+      income,
+      population,
+      (
+        ST_Area(ST_Intersection(spatialobj, ${userCircle})) / ST_Area(spatialobj)
+      ) * 100 AS intersection_percentage
+    FROM ${process.env.TABLE_NAME}
+    WHERE ST_Intersects(spatialobj, ${userCircle})
+  `
+}
+
+// Returns the total population given an intersection percentage
+function getTotalPopulationInAnIntersection() {
+  return `
+    SELECT 
+      SUM(population * (intersection_percentage / 100)) AS total_population
+    FROM IntersectionData
   `
 }
 
 function getArealProportionMethodQuery(userCircle) {
-  // Query to check if feature intersercts with circle
-  const checkIntersection = `ST_Intersects("spatialobj", ${userCircle})
-  `
-  // Query to get the percentage of area that's intersecting with circle
-  const percentageIntersecting = getPercentageOfIntersectionQuery(userCircle)
 
   // Create a table that only contains data that is in the circle
   // and select the total population, and total income of those areas
   const query = `
-    WITH IntersectionData AS (
-        SELECT 
-          ${percentageIntersecting},
-          population, 
-          income
-        FROM ${process.env.TABLE_NAME}
-        WHERE ${checkIntersection}
-      ),
-      TotalPopulation AS (
-        SELECT 
-          SUM(population * (intersection_percentage / 100)) AS total_population
-        FROM IntersectionData
-      )
+    WITH 
+      IntersectionData AS 
+        (${getPercentageOfIntersection(userCircle)}),
+      TotalPopulation AS 
+        (${getTotalPopulationInAnIntersection()})
     SELECT 
       (SELECT total_population FROM TotalPopulation),
       SUM(income * population *(intersection_percentage / 100)) / (SELECT total_population FROM TotalPopulation) AS avg_income
@@ -42,21 +41,23 @@ function getArealProportionMethodQuery(userCircle) {
   return query;
 }
 
-function getCentroidBasedMethodQuery(userCircle) {
-  // Query to get centroid of the spatialobj
-  const centroid = `ST_Centroid("spatialobj")`;
-  // Query to check if centroid is inside the circle
-  const checkCentroidWithinCircle = `ST_Within(${centroid}, ${userCircle})`;
+// Returns data that has the centroids within the user's circle
+function getCentroidsWithinCircle(userCircle) {
+  return `
+    SELECT 
+      population, 
+      income
+    FROM ${process.env.TABLE_NAME}
+    WHERE ST_Within(ST_Centroid(spatialobj), ${userCircle})
+  `
+}
 
+function getCentroidBasedMethodQuery(userCircle) {
   // Create a table that only contains data that is in the circle
   // and select the total population, and total income of those areas
   const query = `
     WITH CentroidsInCircle AS (
-        SELECT 
-          population, 
-          income
-        FROM ${process.env.TABLE_NAME}
-        WHERE ${checkCentroidWithinCircle}
+        ${getCentroidsWithinCircle(userCircle)}
       )
     SELECT 
       SUM(population) AS total_population, 
@@ -70,5 +71,5 @@ function getCentroidBasedMethodQuery(userCircle) {
 module.exports = {
   getArealProportionMethodQuery,
   getCentroidBasedMethodQuery,
-  getPercentageOfIntersectionQuery
+  getPercentageOfIntersection
 }
