@@ -25,12 +25,10 @@ export default function Map() {
     handlePositionChange,
     methodOfCalculation,
   } = useUserConfig();
-  const { featuresInCircle, handleFeaturesInCircleReset } =
-    useCentroidsInCircle();
+  const { featuresInCircle } = useCentroidsInCircle();
 
   const onMapClick = useCallback(
     (coordinates: LatLng) => {
-      handleFeaturesInCircleReset();
       handlePositionChange(coordinates);
     },
     [handlePositionChange]

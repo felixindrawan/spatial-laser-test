@@ -29,17 +29,21 @@ const CalculationContext = createContext<CalculationContextProps>({
 export function CalculationProvider({ children }: { children: ReactNode }) {
   const [totalPopulation, setTotalPopulation] = useState<number>(0);
   const [avgIncome, setAvgIncome] = useState<number>(0);
-  const { handleCircleUpdate } = useCentroidsInCircle();
+  const { handleCircleUpdate, handleFeaturesInCircleReset } =
+    useCentroidsInCircle();
 
   const handleResultsChange = useCallback(
     async (methodOfCalculation: Method, radius: number, position?: LatLng) => {
       if (!position) {
         setTotalPopulation(0);
         setAvgIncome(0);
+        handleFeaturesInCircleReset();
         return;
       }
 
-      // Get keys of features inside the circle
+      // Reset any features in circle on change. See README/Business Logic 2
+      handleFeaturesInCircleReset();
+      // Get keys of features inside the circle. See README/Business Logic 1
       if (methodOfCalculation === Method.CENTROID_BASED_METHOD) {
         handleCircleUpdate(position, radius);
       }
