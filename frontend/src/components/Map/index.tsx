@@ -7,7 +7,7 @@ import {
   Marker,
 } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import { Icon, LatLng, Layer } from "leaflet";
+import { Icon, LatLng } from "leaflet";
 import { useCallback } from "react";
 import { useUserConfig } from "../../hooks/useUserConfig";
 import { MapConfigs, Method } from "../../consts/MapConfigs";

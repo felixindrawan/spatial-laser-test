@@ -57,7 +57,7 @@ export function CentroidsInCircleProvider({
       featuresInCircle,
       handleCircleUpdate,
     }),
-    []
+    [featuresInCircle, handleCircleUpdate]
   );
   return (
     <CentroidsInCircleContext.Provider value={context}>
