@@ -71,7 +71,7 @@ export default function UserConfig() {
           ))}
         </RadioGroup>
       </Grid>
-      {/* Only show centroids config on Method.CENTROID_BASED_METHOD (See README.md/Business Logic #1)*/}
+      {/* Only show centroids config on Method.CENTROID_BASED_METHOD. See README.md/Business Logic #1 */}
       {methodOfCalculation === Method.CENTROID_BASED_METHOD && (
         <Grid item xs={12}>
           <Typography>

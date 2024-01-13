@@ -80,7 +80,7 @@ describe ("POST /results-data - Centroid Based Method", () => {
   })
 })
 
-const queries = require('./queries')
+const queries = require('../queries')
 
 describe ("POST /results-data - Areal Proportion Method", () => {
   it(`should return the correct totalPopulation and avgIncome based on sampleFeatureOne`,
