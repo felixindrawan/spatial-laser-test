@@ -6,7 +6,13 @@ import {
   useMemo,
   useState,
 } from "react";
-import { LEGEND_COLORS, LegendColors } from "../consts/LegendColor";
+import {
+  CIRCLE_COLOR_OPTIONS,
+  FEATURES_COLOR_OPTIONS,
+  LEGEND_COLORS,
+  LegendColors,
+  SELECTED_FEATURES_COLOR_OPTIONS,
+} from "../consts/LegendColor";
 
 type LegendConfigContextProps = {
   featuresColor?: string;
@@ -25,13 +31,13 @@ const LegendConfigContext = createContext<LegendConfigContextProps>({
 
 export function LegendConfigProvider({ children }: { children: ReactNode }) {
   const [featuresColor, setFeaturesColor] = useState(
-    LEGEND_COLORS[LegendColors.BLUE]
+    LEGEND_COLORS[FEATURES_COLOR_OPTIONS[0]]
   );
   const [selectedFeaturesColor, setSelectedFeaturesColor] = useState(
-    LEGEND_COLORS[LegendColors.BLACK]
+    LEGEND_COLORS[SELECTED_FEATURES_COLOR_OPTIONS[0]]
   );
   const [circleColor, setCircleColor] = useState(
-    LEGEND_COLORS[LegendColors.YELLOW]
+    LEGEND_COLORS[CIRCLE_COLOR_OPTIONS[0]]
   );
 
   const handleFeaturesColorChange = useCallback(

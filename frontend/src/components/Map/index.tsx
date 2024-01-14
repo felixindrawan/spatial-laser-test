@@ -57,8 +57,8 @@ export default function Map() {
     }
   );
   const centroidIcon = new Icon({
-    iconUrl: "https://cdn-icons-png.flaticon.com/512/9455/9455172.png",
-    iconSize: [12, 12],
+    iconUrl: "https://cdn-icons-png.flaticon.com/512/7500/7500224.png",
+    iconSize: [24, 24],
   });
 
   return (
@@ -91,11 +91,11 @@ export default function Map() {
           <Circle
             center={currentPosition}
             radius={currentRadius}
-            fillColor="yellow"
-            color={circleColor}
             // Only show fill on Method.AREAL_PROPORTION_METHOD. See README/Business Logic 2
             pathOptions={{
               fill: methodOfCalculation === Method.AREAL_PROPORTION_METHOD,
+              color: circleColor,
+              fillColor: circleColor,
             }}
           ></Circle>
         )}

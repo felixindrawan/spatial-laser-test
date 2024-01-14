@@ -1,4 +1,11 @@
-import { Card, Divider, Popover, Typography } from "@mui/material";
+import {
+  Button,
+  Card,
+  Divider,
+  Popover,
+  Tooltip,
+  Typography,
+} from "@mui/material";
 import { CSSProperties, useState } from "react";
 import { useLegendConfig } from "../../hooks/useLegendConfig";
 import {
@@ -72,11 +79,14 @@ function ColorAndTextGrid({
 
   return (
     <>
-      <div style={{ display: "flex", gap: 5, alignItems: "center" }}>
-        <div
-          style={{ ...STYLES.colorBox, backgroundColor: color }}
-          onClick={handleColorboxClick}
-        />
+      <div style={{ display: "flex", gap: 20, alignItems: "center" }}>
+        <Tooltip title={`Change ${text} Color`} placement="top">
+          <Button
+            variant="contained"
+            style={{ ...STYLES.colorBox, backgroundColor: color }}
+            onClick={handleColorboxClick}
+          />
+        </Tooltip>
         <Typography>{text}</Typography>
       </div>
       <Popover
@@ -99,14 +109,17 @@ function ColorAndTextGrid({
           </Typography>
           <div style={{ display: "flex", gap: 5 }}>
             {colorOptions.map((col) => (
-              <div
-                key={col}
-                style={{
-                  ...STYLES.colorBox,
-                  backgroundColor: LEGEND_COLORS[col as LegendColors],
-                }}
-                onClick={() => handleColorChange(col as LegendColors)}
-              />
+              <Tooltip title={col} placement="top">
+                <Button
+                  variant="contained"
+                  key={col}
+                  style={{
+                    ...STYLES.colorBox,
+                    backgroundColor: LEGEND_COLORS[col as LegendColors],
+                  }}
+                  onClick={() => handleColorChange(col as LegendColors)}
+                />
+              </Tooltip>
             ))}
           </div>
         </div>
@@ -133,7 +146,6 @@ const STYLES: {
   },
   colorBox: {
     cursor: "pointer",
-    width: 24,
     height: 24,
     border: "2px solid rgba(0,0,0,0.2)",
   },
