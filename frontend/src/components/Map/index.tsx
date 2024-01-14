@@ -15,6 +15,7 @@ import { useMap } from "../../hooks/useMap";
 import Loading from "../Loading";
 import ErrorAlert from "../Error";
 import { useCentroidsInCircle } from "../../hooks/useCentroidsInCircle";
+import { useLegendConfig } from "../../hooks/useLegendConfig";
 
 export default function Map() {
   const { mapFeatures, centerOfFeatures, mapLoading, mapError } = useMap();
@@ -26,6 +27,8 @@ export default function Map() {
     methodOfCalculation,
   } = useUserConfig();
   const { featuresInCircle } = useCentroidsInCircle();
+  const { featuresColor, selectedFeaturesColor, circleColor } =
+    useLegendConfig();
 
   const onMapClick = useCallback(
     (coordinates: LatLng) => {
@@ -54,8 +57,8 @@ export default function Map() {
     }
   );
   const centroidIcon = new Icon({
-    iconUrl: "https://cdn-icons-png.flaticon.com/512/9455/9455172.png",
-    iconSize: [12, 12],
+    iconUrl: "https://cdn-icons-png.flaticon.com/512/7500/7500224.png",
+    iconSize: [24, 24],
   });
 
   return (
@@ -73,10 +76,12 @@ export default function Map() {
         {featuresInCircle && (
           <GeoJSON
             data={featuresInCircle}
-            style={{ fill: true, color: "black" }}
+            style={{ fill: true, color: selectedFeaturesColor }}
           />
         )}
-        {mapFeatures && <GeoJSON data={mapFeatures} />}
+        {mapFeatures && (
+          <GeoJSON data={mapFeatures} style={{ color: featuresColor }} />
+        )}
         <MapClick onMapClick={onMapClick} />
         {showCentroids &&
           centroids.map((c: any, i: number) => (
@@ -86,11 +91,11 @@ export default function Map() {
           <Circle
             center={currentPosition}
             radius={currentRadius}
-            fillColor="yellow"
-            color="yellow"
             // Only show fill on Method.AREAL_PROPORTION_METHOD. See README/Business Logic 2
             pathOptions={{
               fill: methodOfCalculation === Method.AREAL_PROPORTION_METHOD,
+              color: circleColor,
+              fillColor: circleColor,
             }}
           ></Circle>
         )}
