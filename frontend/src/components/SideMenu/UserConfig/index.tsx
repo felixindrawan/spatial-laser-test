@@ -12,6 +12,7 @@ import {
   Switch,
 } from "@mui/material";
 import { METHODS, Method } from "../../../consts/MapConfigs";
+import { CSSProperties } from "react";
 
 export default function UserConfig() {
   const {
@@ -47,80 +48,82 @@ export default function UserConfig() {
   };
 
   return (
-    <Grid container spacing={2}>
-      <Grid item xs={12}>
-        <Typography variant="h5">Configs</Typography>
-      </Grid>
-      <Grid item xs={12}>
-        <Typography>
-          <b>Method of Calculation</b>
-        </Typography>
-        <RadioGroup
-          aria-labelledby="method-radio-buttons"
-          name="radio-buttons-group"
-          value={methodOfCalculation}
-          onChange={(e) => handleMethodChange(e.target.value as Method)}
-        >
-          {Object.values(Method).map((m) => (
-            <FormControlLabel
-              key={m}
-              value={m}
-              control={<Radio />}
-              label={METHODS[m]}
-            />
-          ))}
-        </RadioGroup>
-      </Grid>
+    <div style={STYLES.container}>
+      <Typography variant="h5">Configs</Typography>
+      <Typography>
+        <b>Method of Calculation</b>
+      </Typography>
+      <RadioGroup
+        aria-labelledby="method-radio-buttons"
+        name="radio-buttons-group"
+        value={methodOfCalculation}
+        onChange={(e) => handleMethodChange(e.target.value as Method)}
+      >
+        {Object.values(Method).map((m) => (
+          <FormControlLabel
+            key={m}
+            value={m}
+            control={<Radio />}
+            label={METHODS[m]}
+          />
+        ))}
+      </RadioGroup>
       {/* Only show centroids config on Method.CENTROID_BASED_METHOD. See README.md/Business Logic #1 */}
       {methodOfCalculation === Method.CENTROID_BASED_METHOD && (
-        <Grid item xs={12}>
+        <div style={STYLES.container}>
           <Typography>
             <b>Display</b>
           </Typography>
-          Show centroid for each feature
-          <Switch
-            checked={showCentroids}
-            onChange={handleShowCentroidsToggle}
-            inputProps={{ "aria-label": "controlled" }}
+          <div style={{ display: "flex", gap: 5, alignItems: "center" }}>
+            Show centroid for each feature
+            <Switch
+              checked={showCentroids}
+              onChange={handleShowCentroidsToggle}
+              inputProps={{ "aria-label": "controlled" }}
+            />
+          </div>
+        </div>
+      )}
+      <Typography>
+        <b>Radius (in meters)</b>
+      </Typography>
+      <Grid container spacing={2} alignItems="center">
+        <Grid xs={8} item>
+          <Slider
+            value={typeof currentRadius === "number" ? currentRadius : 0}
+            onChange={handleRadiusSliderChange}
+            aria-labelledby="circle-radius-slider"
+            min={CircleConfig.MIN_RADIUS}
+            max={CircleConfig.MAX_RADIUS}
           />
         </Grid>
-      )}
-      <Grid item xs={12}>
-        <Typography>
-          <b>Radius (in meters)</b>
-        </Typography>
-        <Grid container spacing={2} alignItems="center">
-          <Grid xs={8} item>
-            <Slider
-              value={typeof currentRadius === "number" ? currentRadius : 0}
-              onChange={handleRadiusSliderChange}
-              aria-labelledby="circle-radius-slider"
-              min={CircleConfig.MIN_RADIUS}
-              max={CircleConfig.MAX_RADIUS}
-            />
-          </Grid>
-          <Grid xs={4} item>
-            <Input
-              value={currentRadius}
-              size="small"
-              onChange={handleRadiusInputChange}
-              onBlur={handleRadiusBlur}
-              inputProps={{
-                step: 10,
-                min: CircleConfig.MIN_RADIUS,
-                max: CircleConfig.MAX_RADIUS,
-                type: "number",
-                "aria-labelledby": "input-slider",
-              }}
-            />
-          </Grid>
+        <Grid xs={4} item>
+          <Input
+            value={currentRadius}
+            size="small"
+            onChange={handleRadiusInputChange}
+            onBlur={handleRadiusBlur}
+            inputProps={{
+              step: 10,
+              min: CircleConfig.MIN_RADIUS,
+              max: CircleConfig.MAX_RADIUS,
+              type: "number",
+              "aria-labelledby": "input-slider",
+            }}
+          />
         </Grid>
       </Grid>
-      <Grid item xs={12}>
-        <Button variant="contained" color="error" onClick={handleCircleReset}>
-          Reset Circle
-        </Button>
-      </Grid>
-    </Grid>
+      <Button variant="contained" color="error" onClick={handleCircleReset}>
+        Reset Circle
+      </Button>
+    </div>
   );
 }
+
+const STYLES: { [x: string]: CSSProperties } = {
+  container: {
+    display: "flex",
+    flexDirection: "column",
+    gap: 10,
+  },
+};

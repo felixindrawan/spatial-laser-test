@@ -132,7 +132,7 @@ const STYLES: {
 } = {
   container: {
     position: "absolute",
-    bottom: 10,
+    bottom: 30,
     left: 10,
     zIndex: 1000,
     border: "2px solid rgba(0,0,0,0.2)",
