@@ -1,5 +1,5 @@
 export const MapConfigs = {
-  MAP_ZOOM: 10,
+  MAP_ZOOM: 11,
   MAP_HEIGHT: "100vh",
 };
 
