@@ -8,6 +8,7 @@ import {
 } from "react";
 import { Method } from "../consts/MapConfigs";
 import { LatLng } from "leaflet";
+import { useCentroidsInCircle } from "./useCentroidsInCircle";
 
 type CalculationContextProps = {
   totalPopulation: number;
@@ -28,15 +29,26 @@ const CalculationContext = createContext<CalculationContextProps>({
 export function CalculationProvider({ children }: { children: ReactNode }) {
   const [totalPopulation, setTotalPopulation] = useState<number>(0);
   const [avgIncome, setAvgIncome] = useState<number>(0);
+  const { handleCircleUpdate, handleFeaturesInCircleReset } =
+    useCentroidsInCircle();
 
   const handleResultsChange = useCallback(
     async (methodOfCalculation: Method, radius: number, position?: LatLng) => {
       if (!position) {
         setTotalPopulation(0);
         setAvgIncome(0);
+        handleFeaturesInCircleReset();
         return;
       }
 
+      // Reset any features in circle on change. See README/Business Logic 2
+      handleFeaturesInCircleReset();
+      // Get keys of features inside the circle. See README/Business Logic 1
+      if (methodOfCalculation === Method.CENTROID_BASED_METHOD) {
+        handleCircleUpdate(position, radius);
+      }
+
+      // Calculate total population and avgIncome
       const results = await fetch(
         `${process.env.REACT_APP_BACKEND_API_URL}/results-data`,
         {
@@ -64,7 +76,7 @@ export function CalculationProvider({ children }: { children: ReactNode }) {
         setAvgIncome(0);
       }
     },
-    []
+    [handleCircleUpdate, handleFeaturesInCircleReset]
   );
 
   const context = useMemo(

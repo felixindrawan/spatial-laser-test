@@ -54,6 +54,7 @@ function getArealProportionMethodQuery(userCircle) {
 function getCentroidsWithinCircle(userCircle) {
   return `
     SELECT 
+      "Key",
       population, 
       income
     FROM ${process.env.TABLE_NAME}
@@ -77,10 +78,34 @@ function getCentroidBasedMethodQuery(userCircle) {
   return query;
 }
 
+function getFeaturesCollectionAsGeoJSONQuery() {
+  return `
+    SELECT     
+    json_build_object(
+      'type', 'FeatureCollection',
+      'features', json_agg(
+        json_build_object(
+          'type', 'Feature',
+          'id', "Key",
+          'properties', json_build_object(
+            'income', "income",
+            'population', "population",
+            'centroid_coordinate', ST_AsGeoJSON(ST_Centroid("spatialobj"))::json->'coordinates'
+          ),
+          'geometry', ST_AsGeoJSON("spatialobj")::json
+        )
+      )
+    ) AS geojson
+    FROM ${process.env.TABLE_NAME}
+  `
+}
+
 module.exports = {
   getUserCircle,
   getArealProportionMethodQuery,
   getCentroidBasedMethodQuery,
   getTotalPopulationInAnIntersection,
-  getPercentageOfIntersection
+  getPercentageOfIntersection,
+  getCentroidsWithinCircle,
+  getFeaturesCollectionAsGeoJSONQuery
 }
