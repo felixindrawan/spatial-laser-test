@@ -76,7 +76,7 @@ export function CalculationProvider({ children }: { children: ReactNode }) {
         setAvgIncome(0);
       }
     },
-    []
+    [handleCircleUpdate, handleFeaturesInCircleReset]
   );
 
   const context = useMemo(
