@@ -109,10 +109,9 @@ function ColorAndTextGrid({
           </Typography>
           <div style={{ display: "flex", gap: 5 }}>
             {colorOptions.map((col) => (
-              <Tooltip title={col} placement="top">
+              <Tooltip title={col} placement="top" key={col}>
                 <Button
                   variant="contained"
-                  key={col}
                   style={{
                     ...STYLES.colorBox,
                     backgroundColor: LEGEND_COLORS[col as LegendColors],
