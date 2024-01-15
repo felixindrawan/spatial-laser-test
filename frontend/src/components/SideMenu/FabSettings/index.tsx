@@ -1,19 +1,21 @@
 import { Fab } from "@mui/material";
 import { CSSProperties } from "react";
-import { DRAWER_BACKGROUND_COLOR } from "../../../consts/MapConfigs";
+import SettingsIcon from "@mui/icons-material/Settings";
+import { useLegendConfig } from "../../../hooks/useLegendConfig";
 
 export default function FabSettings({
   handleToggle,
 }: {
   handleToggle: () => void;
 }) {
+  const { selectedFeaturesColor } = useLegendConfig();
   return (
-    <Fab onClick={handleToggle} style={STYLES.container}>
-      <img
-        src="https://cdn-icons-png.flaticon.com/512/3019/3019014.png"
-        alt="Settings Icon"
-        style={STYLES.iconImg}
-      />
+    <Fab
+      onClick={handleToggle}
+      style={{ ...STYLES.container, backgroundColor: "white" }}
+      aria-label="open config drawer"
+    >
+      <SettingsIcon style={{ color: selectedFeaturesColor }} />
     </Fab>
   );
 }
@@ -25,10 +27,5 @@ const STYLES: {
     position: "absolute",
     bottom: 30,
     right: 10,
-    backgroundColor: DRAWER_BACKGROUND_COLOR,
-  },
-  iconImg: {
-    height: "24px",
-    pointerEvents: "none",
   },
 };

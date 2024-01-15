@@ -7,14 +7,14 @@ import {
   Typography,
 } from "@mui/material";
 import { CSSProperties, useState } from "react";
-import { useLegendConfig } from "../../hooks/useLegendConfig";
+import { useLegendConfig } from "../../../hooks/useLegendConfig";
 import {
   CIRCLE_COLOR_OPTIONS,
   FEATURES_COLOR_OPTIONS,
   LEGEND_COLORS,
   LegendColors,
   SELECTED_FEATURES_COLOR_OPTIONS,
-} from "../../consts/LegendColor";
+} from "../../../consts/LegendColor";
 
 export default function MapLegend() {
   const {
@@ -131,10 +131,7 @@ const STYLES: {
   [x: string]: CSSProperties;
 } = {
   container: {
-    position: "absolute",
-    bottom: 30,
-    left: 10,
-    zIndex: 1000,
+    width: "100%",
     border: "2px solid rgba(0,0,0,0.2)",
   },
   content: {

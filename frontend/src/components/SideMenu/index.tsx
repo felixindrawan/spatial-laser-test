@@ -1,15 +1,9 @@
-import {
-  Divider,
-  Drawer,
-  IconButton,
-  Tooltip,
-  useMediaQuery,
-} from "@mui/material";
+import { Drawer, IconButton, Tooltip, useMediaQuery } from "@mui/material";
 import { CSSProperties } from "react";
 import UserConfig from "./UserConfig";
-import CalculationResults from "./CalculationResults";
 import { DRAWER_BACKGROUND_COLOR, DRAWER_WIDTH } from "../../consts/MapConfigs";
 import { MEDIUM_SCREEN_AND_ABOVE } from "../../consts/Breakpoints";
+import CloseIcon from "@mui/icons-material/Close";
 
 export default function SideMenu({
   open,
@@ -39,8 +33,6 @@ export default function SideMenu({
         <div style={{ display: "flex", justifyContent: "flex-end" }}>
           <CloseDrawerButton handleClose={handleToggle} />
         </div>
-        <CalculationResults />
-        <Divider />
         <UserConfig />
       </div>
     </Drawer>
@@ -50,12 +42,8 @@ export default function SideMenu({
 const CloseDrawerButton = ({ handleClose }: { handleClose: () => void }) => {
   return (
     <Tooltip title="Close drawer" placement="bottom" onClick={handleClose}>
-      <IconButton size="small">
-        <img
-          src="https://cdn-icons-png.flaticon.com/512/2976/2976286.png"
-          alt="close-icon"
-          style={STYLES.iconImg}
-        />
+      <IconButton size="medium" aria-label="close drawer">
+        <CloseIcon style={{ color: "black" }} />
       </IconButton>
     </Tooltip>
   );
@@ -69,10 +57,5 @@ const STYLES: {
     flexDirection: "column",
     gap: 10,
     padding: 25,
-  },
-  iconImg: {
-    height: 24,
-    pointerEvents: "none",
-    margin: 4,
   },
 };
