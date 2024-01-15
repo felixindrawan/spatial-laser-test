@@ -1,6 +1,6 @@
 import { Fab } from "@mui/material";
 import { CSSProperties } from "react";
-import { CONFIG_BACKGROUND_COLOR } from "../../../consts/MapConfigs";
+import { DRAWER_BACKGROUND_COLOR } from "../../../consts/MapConfigs";
 
 export default function FabSettings({
   handleToggle,
@@ -25,7 +25,7 @@ const STYLES: {
     position: "absolute",
     bottom: 30,
     right: 10,
-    backgroundColor: CONFIG_BACKGROUND_COLOR,
+    backgroundColor: DRAWER_BACKGROUND_COLOR,
   },
   iconImg: {
     height: "24px",
