@@ -40,7 +40,7 @@ Also, create-react-app buildpack only works on heroku-20 or lower
 We only want to show the option to show `centroids` on features when the user chooses `Method.CENTROID_BASED_METHOD` as `centroids` are not used for `Method.AREAL_PROPORTION_METHOD`
 2. `components/Map` - Displaying the user circle
 Goal: Display circle similar to the examples shown in the `Take Home Test Instructions.pdf`.
-* On `Method.AREAL_PROPORTION_METHOD`, we want to show the circle with an opacity
+* On `Method.AREAL_PROPORTION_METHOD`, the circle should only show the stroke, and we want to highlight the intersection of the circle with the intersection of the features
 * On `Method.CENTROID_BASED_METHOD`, the circle should only show the stroke, and any features that has their centroids inside the circle will be highlighted
 
 =====================================

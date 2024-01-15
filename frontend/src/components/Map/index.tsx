@@ -10,11 +10,11 @@ import "leaflet/dist/leaflet.css";
 import { Icon, LatLng } from "leaflet";
 import { useCallback } from "react";
 import { useUserConfig } from "../../hooks/useUserConfig";
-import { MapConfigs, Method } from "../../consts/MapConfigs";
+import { MapConfigs } from "../../consts/MapConfigs";
 import { useMap } from "../../hooks/useMap";
 import Loading from "../Loading";
 import ErrorAlert from "../Error";
-import { useCentroidsInCircle } from "../../hooks/useCentroidsInCircle";
+import { useSelectedFeaturesInCircle } from "../../hooks/useSelectedFeaturesInCircle";
 import { useLegendConfig } from "../../hooks/useLegendConfig";
 import { Backdrop, CircularProgress } from "@mui/material";
 
@@ -25,9 +25,9 @@ export default function Map() {
     currentPosition,
     showCentroids,
     handlePositionChange,
-    methodOfCalculation,
   } = useUserConfig();
-  const { featuresInCircle, loadingFeaturesInCircle } = useCentroidsInCircle();
+  const { featuresInCircle, loadingFeaturesInCircle } =
+    useSelectedFeaturesInCircle();
   const { featuresColor, selectedFeaturesColor, circleColor } =
     useLegendConfig();
 
@@ -88,7 +88,6 @@ export default function Map() {
         {mapFeatures && (
           <GeoJSON data={mapFeatures} style={{ color: featuresColor }} />
         )}
-        <MapClick onMapClick={onMapClick} />
         {showCentroids &&
           centroids.map((c: any, i: number) => (
             <Marker key={i} position={c} icon={centroidIcon} />
@@ -97,14 +96,13 @@ export default function Map() {
           <Circle
             center={currentPosition}
             radius={currentRadius}
-            // Only show fill on Method.AREAL_PROPORTION_METHOD. See README/Business Logic 2
             pathOptions={{
-              fill: methodOfCalculation === Method.AREAL_PROPORTION_METHOD,
               color: circleColor,
-              fillColor: circleColor,
+              fill: false,
             }}
           ></Circle>
         )}
+        <MapClick onMapClick={onMapClick} />
       </MapContainer>
     </div>
   );

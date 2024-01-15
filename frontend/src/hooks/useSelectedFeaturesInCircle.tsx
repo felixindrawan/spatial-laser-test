@@ -8,21 +8,27 @@ import {
   useMemo,
   useState,
 } from "react";
+import { Method } from "../consts/MapConfigs";
 
-type CentroidsInCircleContextProps = {
+type SelectedFeaturesInCircleContextProps = {
   featuresInCircle?: GeoJsonObject;
   loadingFeaturesInCircle: boolean;
-  handleCircleUpdate: (position: LatLng, radius: number) => void;
+  handleCircleUpdate: (
+    position: LatLng,
+    radius: number,
+    methodOfCalculation: Method
+  ) => void;
   handleFeaturesInCircleReset: () => void;
 };
 
-const CentroidsInCircleContext = createContext<CentroidsInCircleContextProps>({
-  loadingFeaturesInCircle: false,
-  handleCircleUpdate: () => {},
-  handleFeaturesInCircleReset: () => {},
-});
+const SelectedFeaturesInCircleContext =
+  createContext<SelectedFeaturesInCircleContextProps>({
+    loadingFeaturesInCircle: false,
+    handleCircleUpdate: () => {},
+    handleFeaturesInCircleReset: () => {},
+  });
 
-export function CentroidsInCircleProvider({
+export function SelectedFeaturesInCircleProvider({
   children,
 }: {
   children: ReactNode;
@@ -35,22 +41,24 @@ export function CentroidsInCircleProvider({
 
   // On user circle updating, we need to update the keys
   const handleCircleUpdate = useCallback(
-    async (position: LatLng, radius: number) => {
+    async (position: LatLng, radius: number, methodOfCalculation: Method) => {
+      const endPoint =
+        methodOfCalculation === Method.AREAL_PROPORTION_METHOD
+          ? "intersection-in-circle-data"
+          : "centroids-in-circle-data";
+
       setLoading(true);
-      await fetch(
-        `${process.env.REACT_APP_BACKEND_API_URL}/centroids-in-circle-data`,
-        {
-          method: "POST",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            position,
-            radius,
-          }),
-        }
-      )
+      await fetch(`${process.env.REACT_APP_BACKEND_API_URL}/${endPoint}`, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          position,
+          radius,
+        }),
+      })
         .then((res) => res.json())
         .then((res) => {
           setFeaturesInCircle(res.features);
@@ -74,12 +82,12 @@ export function CentroidsInCircleProvider({
     [featuresInCircle, handleCircleUpdate, handleFeaturesInCircleReset, loading]
   );
   return (
-    <CentroidsInCircleContext.Provider value={context}>
+    <SelectedFeaturesInCircleContext.Provider value={context}>
       {children}
-    </CentroidsInCircleContext.Provider>
+    </SelectedFeaturesInCircleContext.Provider>
   );
 }
 
-export function useCentroidsInCircle() {
-  return useContext(CentroidsInCircleContext);
+export function useSelectedFeaturesInCircle() {
+  return useContext(SelectedFeaturesInCircleContext);
 }
