@@ -1,4 +1,4 @@
-import { Fab } from "@mui/material";
+import { Fab, Tooltip } from "@mui/material";
 import { CSSProperties } from "react";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { useLegendConfig } from "../../../hooks/useLegendConfig";
@@ -10,13 +10,15 @@ export default function FabSettings({
 }) {
   const { selectedFeaturesColor } = useLegendConfig();
   return (
-    <Fab
-      onClick={handleToggle}
-      style={{ ...STYLES.container, backgroundColor: "white" }}
-      aria-label="open config drawer"
-    >
-      <SettingsIcon style={{ color: selectedFeaturesColor }} />
-    </Fab>
+    <Tooltip title="Open Settings" placement="top-start">
+      <Fab
+        onClick={handleToggle}
+        style={{ ...STYLES.container, backgroundColor: "white" }}
+        aria-label="open settings drawer"
+      >
+        <SettingsIcon style={{ color: selectedFeaturesColor }} />
+      </Fab>
+    </Tooltip>
   );
 }
 

@@ -49,7 +49,9 @@ export default function UserConfig() {
 
   return (
     <div style={STYLES.container}>
-      <Typography variant="h5">Configs</Typography>
+      <Typography variant="h5">
+        <b>Settings</b>
+      </Typography>
       <Typography>
         <b>Method of Calculation</b>
       </Typography>
