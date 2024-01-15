@@ -12,7 +12,7 @@ import {
   Divider,
 } from "@mui/material";
 import { METHODS, Method } from "../../../consts/MapConfigs";
-import { CSSProperties } from "react";
+import { CSSProperties, useState } from "react";
 
 export default function UserConfig() {
   const {
@@ -24,24 +24,34 @@ export default function UserConfig() {
     showCentroids,
     handleShowCentroidsToggle,
   } = useUserConfig();
-
+  // Prevent laggy slider by setting an immediate value for the slider
+  const [radiusSliderValue, setRadiusSliderValue] = useState(currentRadius);
   const handleRadiusSliderChange = (
     event: Event,
     newValue: number | number[]
+  ) => setRadiusSliderValue(newValue as number);
+
+  // Update current radius from the slider on change commited
+  const handleRadiusSliderChangeCommited = (
+    _: any,
+    value: number | number[]
   ) => {
-    handleRadiusChange(newValue as number);
+    handleRadiusChange(value as number);
   };
   const handleRadiusInputChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    handleRadiusChange(
-      event.target.value === "" ? 0 : Number(event.target.value)
-    );
+    const newValue = event.target.value === "" ? 0 : Number(event.target.value);
+
+    setRadiusSliderValue(newValue);
+    handleRadiusChange(newValue);
   };
   const handleRadiusBlur = () => {
     if (currentRadius < CircleConfig.MIN_RADIUS) {
+      setRadiusSliderValue(CircleConfig.MIN_RADIUS);
       handleRadiusChange(CircleConfig.MIN_RADIUS);
     } else if (currentRadius > CircleConfig.MAX_RADIUS) {
+      setRadiusSliderValue(CircleConfig.MAX_RADIUS);
       handleRadiusChange(CircleConfig.MAX_RADIUS);
     }
   };
@@ -94,14 +104,17 @@ export default function UserConfig() {
         </Typography>
         <div style={STYLES.spaceBetweenContainer}>
           <Slider
-            value={typeof currentRadius === "number" ? currentRadius : 0}
+            value={
+              typeof radiusSliderValue === "number" ? radiusSliderValue : 0
+            }
             onChange={handleRadiusSliderChange}
+            onChangeCommitted={handleRadiusSliderChangeCommited}
             aria-labelledby="circle-radius-slider"
             min={CircleConfig.MIN_RADIUS}
             max={CircleConfig.MAX_RADIUS}
           />
           <Input
-            value={currentRadius}
+            value={radiusSliderValue}
             size="small"
             onChange={handleRadiusInputChange}
             onBlur={handleRadiusBlur}
