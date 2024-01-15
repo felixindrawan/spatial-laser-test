@@ -98,6 +98,7 @@ export default function Map() {
             radius={currentRadius}
             pathOptions={{
               color: circleColor,
+              fill: false,
             }}
           ></Circle>
         )}
