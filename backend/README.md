@@ -24,7 +24,7 @@ PORT=
 * Built on Windows 11
 * Node
 * Docker Desktop (on Windows)  
-* Docker compose
+* Docker compose CLI
 
 ### Executing program Locally
 * Launch Docker Desktop, ensuring Daemon is running
