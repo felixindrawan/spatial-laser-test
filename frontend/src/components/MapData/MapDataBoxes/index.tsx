@@ -28,20 +28,15 @@ export default function MapDataBoxes({
           <Typography>
             <b>{title}</b>
           </Typography>
-          <IconButton
-            onClick={toggleExpandInfo}
-            style={{ width: 24, height: 24 }}
-          >
-            {isExpanded ? (
-              <Tooltip title="Hide">
-                <VisibilityOffIcon />
-              </Tooltip>
-            ) : (
-              <Tooltip title="Show">
-                <VisibilityIcon />
-              </Tooltip>
-            )}
-          </IconButton>
+          <Tooltip title={isExpanded ? "Hide" : "Show"}>
+            <IconButton
+              onClick={toggleExpandInfo}
+              style={{ width: 24, height: 24 }}
+              aria-label="Show/hide data"
+            >
+              {isExpanded ? <VisibilityOffIcon /> : <VisibilityIcon />}
+            </IconButton>
+          </Tooltip>
         </div>
         {isExpanded && (
           <>
