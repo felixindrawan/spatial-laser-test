@@ -12,3 +12,7 @@ export const METHODS = {
   [Method.CENTROID_BASED_METHOD]: "Centroid Based Method",
   [Method.AREAL_PROPORTION_METHOD]: "Areal Proportion Method",
 };
+
+export const DRAWER_BACKGROUND_COLOR = "rgb(198,222,241)";
+
+export const DRAWER_WIDTH = 400;

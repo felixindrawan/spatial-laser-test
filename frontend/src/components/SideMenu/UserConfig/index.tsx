@@ -1,7 +1,6 @@
 import { useUserConfig } from "../../../hooks/useUserConfig";
 import { CircleConfig } from "../../../consts/UserRadius";
 import {
-  Grid,
   Input,
   Slider,
   Typography,
@@ -10,8 +9,10 @@ import {
   Button,
   RadioGroup,
   Switch,
+  Divider,
 } from "@mui/material";
 import { METHODS, Method } from "../../../consts/MapConfigs";
+import { CSSProperties } from "react";
 
 export default function UserConfig() {
   const {
@@ -37,7 +38,6 @@ export default function UserConfig() {
       event.target.value === "" ? 0 : Number(event.target.value)
     );
   };
-
   const handleRadiusBlur = () => {
     if (currentRadius < CircleConfig.MIN_RADIUS) {
       handleRadiusChange(CircleConfig.MIN_RADIUS);
@@ -47,11 +47,11 @@ export default function UserConfig() {
   };
 
   return (
-    <Grid container spacing={2}>
-      <Grid item xs={12}>
-        <Typography variant="h5">Configs</Typography>
-      </Grid>
-      <Grid item xs={12}>
+    <div style={STYLES.container}>
+      <Typography variant="h5">
+        <b>Settings</b>
+      </Typography>
+      <div style={STYLES.subContainer}>
         <Typography>
           <b>Method of Calculation</b>
         </Typography>
@@ -70,57 +70,74 @@ export default function UserConfig() {
             />
           ))}
         </RadioGroup>
-      </Grid>
+      </div>
       {/* Only show centroids config on Method.CENTROID_BASED_METHOD. See README.md/Business Logic #1 */}
       {methodOfCalculation === Method.CENTROID_BASED_METHOD && (
-        <Grid item xs={12}>
+        <div style={STYLES.subContainer}>
           <Typography>
             <b>Display</b>
           </Typography>
-          Show centroid for each feature
-          <Switch
-            checked={showCentroids}
-            onChange={handleShowCentroidsToggle}
-            inputProps={{ "aria-label": "controlled" }}
-          />
-        </Grid>
+          <div style={STYLES.spaceBetweenContainer}>
+            Show centroid for each feature
+            <Switch
+              checked={showCentroids}
+              onChange={handleShowCentroidsToggle}
+              inputProps={{ "aria-label": "controlled" }}
+            />
+          </div>
+        </div>
       )}
-      <Grid item xs={12}>
+      <Divider />
+      <div style={STYLES.subContainer}>
         <Typography>
-          <b>Radius (in meters)</b>
+          <b>Circle Radius (in meters)</b>
         </Typography>
-        <Grid container spacing={2} alignItems="center">
-          <Grid xs={8} item>
-            <Slider
-              value={typeof currentRadius === "number" ? currentRadius : 0}
-              onChange={handleRadiusSliderChange}
-              aria-labelledby="circle-radius-slider"
-              min={CircleConfig.MIN_RADIUS}
-              max={CircleConfig.MAX_RADIUS}
-            />
-          </Grid>
-          <Grid xs={4} item>
-            <Input
-              value={currentRadius}
-              size="small"
-              onChange={handleRadiusInputChange}
-              onBlur={handleRadiusBlur}
-              inputProps={{
-                step: 10,
-                min: CircleConfig.MIN_RADIUS,
-                max: CircleConfig.MAX_RADIUS,
-                type: "number",
-                "aria-labelledby": "input-slider",
-              }}
-            />
-          </Grid>
-        </Grid>
-      </Grid>
-      <Grid item xs={12}>
-        <Button variant="contained" color="error" onClick={handleCircleReset}>
-          Reset Circle
-        </Button>
-      </Grid>
-    </Grid>
+        <div style={STYLES.spaceBetweenContainer}>
+          <Slider
+            value={typeof currentRadius === "number" ? currentRadius : 0}
+            onChange={handleRadiusSliderChange}
+            aria-labelledby="circle-radius-slider"
+            min={CircleConfig.MIN_RADIUS}
+            max={CircleConfig.MAX_RADIUS}
+          />
+          <Input
+            value={currentRadius}
+            size="small"
+            onChange={handleRadiusInputChange}
+            onBlur={handleRadiusBlur}
+            inputProps={{
+              step: 10,
+              min: CircleConfig.MIN_RADIUS,
+              max: CircleConfig.MAX_RADIUS,
+              type: "number",
+              "aria-labelledby": "circle-radius-input",
+            }}
+            style={{ width: 100 }}
+          />
+        </div>
+      </div>
+      <Button variant="contained" color="error" onClick={handleCircleReset}>
+        Reset Circle
+      </Button>
+    </div>
   );
 }
+
+const STYLES: { [x: string]: CSSProperties } = {
+  container: {
+    display: "flex",
+    flexDirection: "column",
+    gap: 20,
+  },
+  subContainer: {
+    display: "flex",
+    flexDirection: "column",
+    gap: 10,
+  },
+  spaceBetweenContainer: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    gap: 50,
+  },
+};

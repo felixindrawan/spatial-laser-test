@@ -1,47 +1,81 @@
-import { Card, CardContent, Divider } from "@mui/material";
-import { CSSProperties, useCallback, useState } from "react";
+import {
+  Divider,
+  Drawer,
+  IconButton,
+  Tooltip,
+  Typography,
+  useMediaQuery,
+} from "@mui/material";
+import { CSSProperties } from "react";
 import UserConfig from "./UserConfig";
-import Draggable from "react-draggable";
-import MenuCardHeader from "./MenuCardHeader";
+import { DRAWER_BACKGROUND_COLOR, DRAWER_WIDTH } from "../../consts/MapConfigs";
+import { MEDIUM_SCREEN_AND_ABOVE } from "../../consts/Breakpoints";
+import CloseIcon from "@mui/icons-material/Close";
 
-export default function SideMenu() {
-  const [minimized, setMinimized] = useState(false);
-  const handleMinimizedToggle = useCallback(() => {
-    setMinimized(!minimized);
-  }, [minimized]);
+export default function SideMenu({
+  open,
+  handleToggle,
+}: {
+  open: boolean;
+  handleToggle: () => void;
+}) {
+  const isMobile = !useMediaQuery(MEDIUM_SCREEN_AND_ABOVE);
   return (
-    <Draggable bounds="body" handle=".handle">
-      <Card style={STYLES.container}>
-        <CardContent style={STYLES.content}>
-          <MenuCardHeader toggleMinimized={handleMinimizedToggle} />
-          {!minimized && (
-            <>
-              <Divider />
-              <UserConfig />
-            </>
-          )}
-        </CardContent>
-      </Card>
-    </Draggable>
+    <Drawer
+      open={open}
+      onClose={handleToggle}
+      anchor="right"
+      variant="persistent"
+      sx={{
+        // https://mui.com/material-ui/react-drawer/#system-PersistentDrawerLeft.tsx
+        flexShrink: 0,
+        "& .MuiDrawer-paper": {
+          boxSizing: "border-box",
+          backgroundColor: DRAWER_BACKGROUND_COLOR,
+          width: isMobile ? "100%" : DRAWER_WIDTH,
+        },
+      }}
+    >
+      <div style={STYLES.container}>
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <SideMenuHeader />
+          <CloseDrawerButton handleClose={handleToggle} />
+        </div>
+        <Divider />
+        <UserConfig />
+      </div>
+    </Drawer>
   );
 }
+
+const SideMenuHeader = () => {
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+      <Typography variant="h5">
+        <b>Demographic Harvesting</b>
+      </Typography>
+      <Typography>by Felix Indrawan</Typography>
+    </div>
+  );
+};
+
+const CloseDrawerButton = ({ handleClose }: { handleClose: () => void }) => {
+  return (
+    <Tooltip title="Close drawer" placement="bottom" onClick={handleClose}>
+      <IconButton aria-label="close drawer" style={{ width: 32, height: 32 }}>
+        <CloseIcon style={{ color: "black" }} />
+      </IconButton>
+    </Tooltip>
+  );
+};
 
 const STYLES: {
   [x: string]: CSSProperties;
 } = {
   container: {
-    position: "absolute",
-    top: 100,
-    right: 100,
-    zIndex: 1000,
-    width: "24rem",
-    backgroundColor: "rgba(198, 222, 241)",
-    borderRadius: 10,
-    padding: 10,
-  },
-  content: {
     display: "flex",
     flexDirection: "column",
     gap: 20,
+    padding: 25,
   },
 };
