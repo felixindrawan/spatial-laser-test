@@ -26,13 +26,11 @@ export const LEGEND_COLORS: Record<LegendColors, string> = {
   // Selected Features Colors
   [LegendColors.DARK_BLUE]: "#1A4A9F",
   [LegendColors.DARK_GREEN]: "#006400",
-
   [LegendColors.DARK_PLUM]: "#632D56",
 
   // Circle Colors
   [LegendColors.BRIGHT_RED]: "#FF3300",
   [LegendColors.GOLD]: "#FFD700",
-
   [LegendColors.YELLOW]: "yellow",
   [LegendColors.TURQOUISE]: "#40E0D0",
 };
