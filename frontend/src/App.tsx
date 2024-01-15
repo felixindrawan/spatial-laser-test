@@ -8,6 +8,7 @@ import { MapProvider } from "./hooks/useMap";
 import { UserConfigProvider } from "./hooks/useUserConfig";
 import FabSettings from "./components/SideMenu/FabSettings";
 import MapData from "./components/MapData";
+import CurrentCoordinates from "./components/CurrentCoordinates";
 
 function App() {
   const [openDrawer, setOpenDrawer] = useState(false);
@@ -22,6 +23,7 @@ function App() {
           <CalculationProvider>
             <UserConfigProvider>
               <LegendConfigProvider>
+                <CurrentCoordinates />
                 <MapData />
                 <FabSettings handleToggle={handleDrawerToggle} />
                 <SideMenu open={openDrawer} handleToggle={handleDrawerToggle} />

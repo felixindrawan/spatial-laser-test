@@ -1,7 +1,6 @@
 import { useUserConfig } from "../../../hooks/useUserConfig";
 import { CircleConfig } from "../../../consts/UserRadius";
 import {
-  Grid,
   Input,
   Slider,
   Typography,
@@ -10,6 +9,7 @@ import {
   Button,
   RadioGroup,
   Switch,
+  Divider,
 } from "@mui/material";
 import { METHODS, Method } from "../../../consts/MapConfigs";
 import { CSSProperties } from "react";
@@ -38,7 +38,6 @@ export default function UserConfig() {
       event.target.value === "" ? 0 : Number(event.target.value)
     );
   };
-
   const handleRadiusBlur = () => {
     if (currentRadius < CircleConfig.MIN_RADIUS) {
       handleRadiusChange(CircleConfig.MIN_RADIUS);
@@ -52,31 +51,33 @@ export default function UserConfig() {
       <Typography variant="h5">
         <b>Settings</b>
       </Typography>
-      <Typography>
-        <b>Method of Calculation</b>
-      </Typography>
-      <RadioGroup
-        aria-labelledby="method-radio-buttons"
-        name="radio-buttons-group"
-        value={methodOfCalculation}
-        onChange={(e) => handleMethodChange(e.target.value as Method)}
-      >
-        {Object.values(Method).map((m) => (
-          <FormControlLabel
-            key={m}
-            value={m}
-            control={<Radio />}
-            label={METHODS[m]}
-          />
-        ))}
-      </RadioGroup>
+      <div style={STYLES.subContainer}>
+        <Typography>
+          <b>Method of Calculation</b>
+        </Typography>
+        <RadioGroup
+          aria-labelledby="method-radio-buttons"
+          name="radio-buttons-group"
+          value={methodOfCalculation}
+          onChange={(e) => handleMethodChange(e.target.value as Method)}
+        >
+          {Object.values(Method).map((m) => (
+            <FormControlLabel
+              key={m}
+              value={m}
+              control={<Radio />}
+              label={METHODS[m]}
+            />
+          ))}
+        </RadioGroup>
+      </div>
       {/* Only show centroids config on Method.CENTROID_BASED_METHOD. See README.md/Business Logic #1 */}
       {methodOfCalculation === Method.CENTROID_BASED_METHOD && (
-        <div style={STYLES.container}>
+        <div style={STYLES.subContainer}>
           <Typography>
             <b>Display</b>
           </Typography>
-          <div style={{ display: "flex", gap: 5, alignItems: "center" }}>
+          <div style={STYLES.spaceBetweenContainer}>
             Show centroid for each feature
             <Switch
               checked={showCentroids}
@@ -86,11 +87,12 @@ export default function UserConfig() {
           </div>
         </div>
       )}
-      <Typography>
-        <b>Radius (in meters)</b>
-      </Typography>
-      <Grid container spacing={2} alignItems="center">
-        <Grid xs={8} item>
+      <Divider />
+      <div style={STYLES.subContainer}>
+        <Typography>
+          <b>Circle Radius (in meters)</b>
+        </Typography>
+        <div style={STYLES.spaceBetweenContainer}>
           <Slider
             value={typeof currentRadius === "number" ? currentRadius : 0}
             onChange={handleRadiusSliderChange}
@@ -98,8 +100,6 @@ export default function UserConfig() {
             min={CircleConfig.MIN_RADIUS}
             max={CircleConfig.MAX_RADIUS}
           />
-        </Grid>
-        <Grid xs={4} item>
           <Input
             value={currentRadius}
             size="small"
@@ -110,11 +110,12 @@ export default function UserConfig() {
               min: CircleConfig.MIN_RADIUS,
               max: CircleConfig.MAX_RADIUS,
               type: "number",
-              "aria-labelledby": "input-slider",
+              "aria-labelledby": "circle-radius-input",
             }}
+            style={{ width: 100 }}
           />
-        </Grid>
-      </Grid>
+        </div>
+      </div>
       <Button variant="contained" color="error" onClick={handleCircleReset}>
         Reset Circle
       </Button>
@@ -126,6 +127,17 @@ const STYLES: { [x: string]: CSSProperties } = {
   container: {
     display: "flex",
     flexDirection: "column",
+    gap: 20,
+  },
+  subContainer: {
+    display: "flex",
+    flexDirection: "column",
     gap: 10,
+  },
+  spaceBetweenContainer: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    gap: 50,
   },
 };

@@ -1,4 +1,11 @@
-import { Drawer, IconButton, Tooltip, useMediaQuery } from "@mui/material";
+import {
+  Divider,
+  Drawer,
+  IconButton,
+  Tooltip,
+  Typography,
+  useMediaQuery,
+} from "@mui/material";
 import { CSSProperties } from "react";
 import UserConfig from "./UserConfig";
 import { DRAWER_BACKGROUND_COLOR, DRAWER_WIDTH } from "../../consts/MapConfigs";
@@ -30,19 +37,32 @@ export default function SideMenu({
       }}
     >
       <div style={STYLES.container}>
-        <div style={{ display: "flex", justifyContent: "flex-end" }}>
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <SideMenuHeader />
           <CloseDrawerButton handleClose={handleToggle} />
         </div>
+        <Divider />
         <UserConfig />
       </div>
     </Drawer>
   );
 }
 
+const SideMenuHeader = () => {
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+      <Typography variant="h5">
+        <b>Demographic Harvesting</b>
+      </Typography>
+      <Typography>by Felix Indrawan</Typography>
+    </div>
+  );
+};
+
 const CloseDrawerButton = ({ handleClose }: { handleClose: () => void }) => {
   return (
     <Tooltip title="Close drawer" placement="bottom" onClick={handleClose}>
-      <IconButton size="medium" aria-label="close drawer">
+      <IconButton aria-label="close drawer" style={{ width: 32, height: 32 }}>
         <CloseIcon style={{ color: "black" }} />
       </IconButton>
     </Tooltip>
@@ -55,7 +75,7 @@ const STYLES: {
   container: {
     display: "flex",
     flexDirection: "column",
-    gap: 10,
+    gap: 20,
     padding: 25,
   },
 };
