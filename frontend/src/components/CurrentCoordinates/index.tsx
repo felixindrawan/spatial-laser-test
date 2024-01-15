@@ -11,7 +11,7 @@ export default function CurrentCoordinates() {
     <Card style={STYLES.container} variant="outlined">
       <div style={STYLES.content}>
         <Typography>
-          <b>Current Coordinates (Lat, Lng)</b>
+          <b>Current Coordinates (Lat, Long)</b>
         </Typography>
         <Typography>
           {currentPosition?.lat}, {currentPosition?.lng}
