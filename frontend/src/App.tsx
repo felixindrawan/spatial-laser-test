@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback } from "react";
 import Map from "./components/Map";
 import SideMenu from "./components/SideMenu";
 import { CalculationProvider } from "./hooks/useCalculation";
@@ -9,12 +9,13 @@ import { UserConfigProvider } from "./hooks/useUserConfig";
 import FabSettings from "./components/SideMenu/FabSettings";
 import MapData from "./components/MapData";
 import CurrentCoordinates from "./components/CurrentCoordinates";
+import { useLocalStorage } from "@uidotdev/usehooks";
 
 function App() {
-  const [openDrawer, setOpenDrawer] = useState(false);
+  const [openDrawer, setOpenDrawer] = useLocalStorage("drawerState", true);
   const handleDrawerToggle = useCallback(() => {
     setOpenDrawer(!openDrawer);
-  }, [openDrawer]);
+  }, [openDrawer, setOpenDrawer]);
 
   return (
     <div>

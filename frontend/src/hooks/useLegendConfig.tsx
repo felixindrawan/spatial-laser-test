@@ -4,7 +4,6 @@ import {
   useCallback,
   useContext,
   useMemo,
-  useState,
 } from "react";
 import {
   CIRCLE_COLOR_OPTIONS,
@@ -13,6 +12,7 @@ import {
   LegendColors,
   SELECTED_FEATURES_COLOR_OPTIONS,
 } from "../consts/LegendColor";
+import { useLocalStorage } from "@uidotdev/usehooks";
 
 type LegendConfigContextProps = {
   featuresColor?: string;
@@ -30,28 +30,31 @@ const LegendConfigContext = createContext<LegendConfigContextProps>({
 });
 
 export function LegendConfigProvider({ children }: { children: ReactNode }) {
-  const [featuresColor, setFeaturesColor] = useState(
+  const [featuresColor, setFeaturesColor] = useLocalStorage(
+    "featuresColor",
     LEGEND_COLORS[FEATURES_COLOR_OPTIONS[0]]
   );
-  const [selectedFeaturesColor, setSelectedFeaturesColor] = useState(
+  const [selectedFeaturesColor, setSelectedFeaturesColor] = useLocalStorage(
+    "selectedFeaturesColor",
     LEGEND_COLORS[SELECTED_FEATURES_COLOR_OPTIONS[0]]
   );
-  const [circleColor, setCircleColor] = useState(
+  const [circleColor, setCircleColor] = useLocalStorage(
+    "circleColor",
     LEGEND_COLORS[CIRCLE_COLOR_OPTIONS[0]]
   );
 
   const handleFeaturesColorChange = useCallback(
     (newColor: LegendColors) => setFeaturesColor(LEGEND_COLORS[newColor]),
-    []
+    [setFeaturesColor]
   );
   const handleSelectedFeaturesColorChange = useCallback(
     (newColor: LegendColors) =>
       setSelectedFeaturesColor(LEGEND_COLORS[newColor]),
-    []
+    [setSelectedFeaturesColor]
   );
   const handleCircleColorChange = useCallback(
     (newColor: LegendColors) => setCircleColor(LEGEND_COLORS[newColor]),
-    []
+    [setCircleColor]
   );
 
   const context = useMemo(

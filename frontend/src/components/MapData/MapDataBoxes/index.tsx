@@ -1,7 +1,8 @@
-import { CSSProperties, useState } from "react";
+import { CSSProperties } from "react";
 import { IconButton, Tooltip, Typography, Card, Divider } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import { useLocalStorage } from "@uidotdev/usehooks";
 
 export default function MapDataBoxes({
   title,
@@ -10,7 +11,10 @@ export default function MapDataBoxes({
   title: string;
   children: React.ReactNode;
 }) {
-  const [isExpanded, setExpanded] = useState(true);
+  const [isExpanded, setExpanded] = useLocalStorage(
+    `${title}-visibility`,
+    false
+  );
   const toggleExpandInfo = () => {
     setExpanded(!isExpanded);
   };

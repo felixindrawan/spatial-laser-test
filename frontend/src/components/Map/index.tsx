@@ -10,7 +10,7 @@ import "leaflet/dist/leaflet.css";
 import { Icon, LatLng } from "leaflet";
 import { useCallback } from "react";
 import { useUserConfig } from "../../hooks/useUserConfig";
-import { MapConfigs } from "../../consts/MapConfigs";
+import { MapConfigs, Method } from "../../consts/MapConfigs";
 import { useMap } from "../../hooks/useMap";
 import Loading from "../Loading";
 import ErrorAlert from "../Error";
@@ -25,6 +25,7 @@ export default function Map() {
     currentPosition,
     showCentroids,
     handlePositionChange,
+    methodOfCalculation,
   } = useUserConfig();
   const { featuresInCircle, loadingFeaturesInCircle } =
     useSelectedFeaturesInCircle();
@@ -89,6 +90,7 @@ export default function Map() {
           <GeoJSON data={mapFeatures} style={{ color: featuresColor }} />
         )}
         {showCentroids &&
+          methodOfCalculation === Method.CENTROID_BASED_METHOD &&
           centroids.map((c: any, i: number) => (
             <Marker key={i} position={c} icon={centroidIcon} />
           ))}

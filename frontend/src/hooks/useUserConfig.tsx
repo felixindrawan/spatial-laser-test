@@ -10,6 +10,7 @@ import {
 import { Method } from "../consts/MapConfigs";
 import { useCalculation } from "./useCalculation";
 import { CircleDefaults } from "../consts/UserRadius";
+import { useLocalStorage } from "@uidotdev/usehooks";
 
 type UserConfigContextProps = {
   currentRadius: number;
@@ -30,18 +31,25 @@ const UserConfigContext = createContext<UserConfigContextProps>({
   handleCircleReset: () => {},
   methodOfCalculation: Method.CENTROID_BASED_METHOD,
   handleMethodChange: () => {},
-  showCentroids: false,
+  showCentroids: true,
   handleShowCentroidsToggle: () => {},
 });
 
 export function UserConfigProvider({ children }: { children: ReactNode }) {
-  const [radius, setRadius] = useState<number>(CircleDefaults.CIRCLE_RADIUS); // In meters
-  const [position, setPosition] = useState<LatLng>();
-  const [methodOfCalculation, setMethodOfCalculation] = useState<Method>(
+  const [radius, setRadius] = useLocalStorage<number>(
+    "circleRadius",
+    CircleDefaults.CIRCLE_RADIUS
+  ); // In meters
+  const [position, setPosition] = useState<LatLng>(
+    CircleDefaults.CIRCLE_POSITION
+  );
+  const [methodOfCalculation, setMethodOfCalculation] = useLocalStorage<Method>(
+    "methodOfCalculation",
     Method.CENTROID_BASED_METHOD
   );
-  const [showCentroids, setShowCentroids] = useState<boolean>(
-    methodOfCalculation === Method.CENTROID_BASED_METHOD
+  const [showCentroids, setShowCentroids] = useLocalStorage<boolean>(
+    "showCentroids",
+    true
   );
 
   const { handleResultsChange } = useCalculation();
@@ -49,14 +57,11 @@ export function UserConfigProvider({ children }: { children: ReactNode }) {
   const handleMethodChange = useCallback(
     (newMethod: Method) => {
       setMethodOfCalculation(newMethod);
-      // Only show centroids on Method.CENTROID_BASED_METHOD. See README.md/Business Logic #1
-      setShowCentroids(newMethod === Method.CENTROID_BASED_METHOD);
-
       if (position) {
         handleResultsChange(newMethod, radius, position);
       }
     },
-    [handleResultsChange, radius, position]
+    [handleResultsChange, radius, position, setMethodOfCalculation]
   );
   const handleRadiusChange = useCallback(
     (newRadius: number) => {
@@ -66,7 +71,7 @@ export function UserConfigProvider({ children }: { children: ReactNode }) {
         handleResultsChange(methodOfCalculation, newRadius, position);
       }
     },
-    [handleResultsChange, methodOfCalculation, position]
+    [handleResultsChange, methodOfCalculation, position, setRadius]
   );
   const handlePositionChange = useCallback(
     (newPosition: LatLng) => {
@@ -84,10 +89,10 @@ export function UserConfigProvider({ children }: { children: ReactNode }) {
       CircleDefaults.CIRCLE_RADIUS,
       CircleDefaults.CIRCLE_POSITION
     );
-  }, [handleResultsChange, methodOfCalculation]);
+  }, [handleResultsChange, methodOfCalculation, setRadius]);
   const handleShowCentroidsToggle = useCallback(() => {
     setShowCentroids(!showCentroids);
-  }, [showCentroids]);
+  }, [showCentroids, setShowCentroids]);
 
   const context = useMemo(
     () => ({
