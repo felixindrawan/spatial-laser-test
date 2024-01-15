@@ -11,7 +11,9 @@ export default function CensusData() {
       <Typography>
         <b>Total Population</b>
       </Typography>
-      <Typography>{Math.round(totalPopulation ?? 0)}</Typography>
+      <Typography>
+        {Math.round(totalPopulation ?? 0).toLocaleString()}
+      </Typography>
       <Typography>
         <b>Average Income</b>
       </Typography>
