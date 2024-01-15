@@ -16,6 +16,7 @@ import Loading from "../Loading";
 import ErrorAlert from "../Error";
 import { useCentroidsInCircle } from "../../hooks/useCentroidsInCircle";
 import { useLegendConfig } from "../../hooks/useLegendConfig";
+import { Backdrop, CircularProgress } from "@mui/material";
 
 export default function Map() {
   const { mapFeatures, centerOfFeatures, mapLoading, mapError } = useMap();
@@ -26,7 +27,7 @@ export default function Map() {
     handlePositionChange,
     methodOfCalculation,
   } = useUserConfig();
-  const { featuresInCircle } = useCentroidsInCircle();
+  const { featuresInCircle, loadingFeaturesInCircle } = useCentroidsInCircle();
   const { featuresColor, selectedFeaturesColor, circleColor } =
     useLegendConfig();
 
@@ -63,6 +64,11 @@ export default function Map() {
 
   return (
     <div style={{ height: MapConfigs.MAP_HEIGHT }}>
+      {/* Loading for features in circle */}
+      <Backdrop open={loadingFeaturesInCircle} style={{ zIndex: 1000 }}>
+        <CircularProgress style={{ color: "white" }} />
+      </Backdrop>
+      {/* Map */}
       <MapContainer
         center={centerOfFeatures}
         zoom={MapConfigs.MAP_ZOOM}
