@@ -11,6 +11,7 @@ import UserConfig from "./UserConfig";
 import { DRAWER_BACKGROUND_COLOR, DRAWER_WIDTH } from "../../consts/MapConfigs";
 import { MEDIUM_SCREEN_AND_ABOVE } from "../../consts/Breakpoints";
 import CloseIcon from "@mui/icons-material/Close";
+import MapLegendConfig from "./MapLegendConfig";
 
 export default function SideMenu({
   open,
@@ -43,6 +44,8 @@ export default function SideMenu({
         </div>
         <Divider />
         <UserConfig />
+        <Divider />
+        <MapLegendConfig />
       </div>
     </Drawer>
   );
