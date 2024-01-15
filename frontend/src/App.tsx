@@ -2,7 +2,7 @@ import { useCallback, useState } from "react";
 import Map from "./components/Map";
 import SideMenu from "./components/SideMenu";
 import { CalculationProvider } from "./hooks/useCalculation";
-import { CentroidsInCircleProvider } from "./hooks/useCentroidsInCircle";
+import { SelectedFeaturesInCircleProvider } from "./hooks/useSelectedFeaturesInCircle";
 import { LegendConfigProvider } from "./hooks/useLegendConfig";
 import { MapProvider } from "./hooks/useMap";
 import { UserConfigProvider } from "./hooks/useUserConfig";
@@ -19,7 +19,7 @@ function App() {
   return (
     <div>
       <MapProvider>
-        <CentroidsInCircleProvider>
+        <SelectedFeaturesInCircleProvider>
           <CalculationProvider>
             <UserConfigProvider>
               <LegendConfigProvider>
@@ -31,7 +31,7 @@ function App() {
               </LegendConfigProvider>
             </UserConfigProvider>
           </CalculationProvider>
-        </CentroidsInCircleProvider>
+        </SelectedFeaturesInCircleProvider>
       </MapProvider>
     </div>
   );
