@@ -13,7 +13,7 @@ export default function MapDataBoxes({
 }) {
   const [isExpanded, setExpanded] = useLocalStorage(
     `${title}-visibility`,
-    false
+    true
   );
   const toggleExpandInfo = () => {
     setExpanded(!isExpanded);

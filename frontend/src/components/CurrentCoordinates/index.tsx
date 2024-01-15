@@ -4,8 +4,7 @@ import { useUserConfig } from "../../hooks/useUserConfig";
 
 export default function CurrentCoordinates() {
   const { currentPosition } = useUserConfig();
-
-  if (!currentPosition) return <></>;
+  if (!currentPosition?.lat || !currentPosition?.lng) return <></>;
 
   return (
     <Card style={STYLES.container} variant="outlined">
