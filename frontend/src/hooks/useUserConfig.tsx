@@ -57,7 +57,7 @@ export function UserConfigProvider({ children }: { children: ReactNode }) {
   const handleMethodChange = useCallback(
     (newMethod: Method) => {
       setMethodOfCalculation(newMethod);
-      if (position) {
+      if (position.lat && position.lng) {
         handleResultsChange(newMethod, radius, position);
       }
     },
@@ -67,7 +67,7 @@ export function UserConfigProvider({ children }: { children: ReactNode }) {
     (newRadius: number) => {
       setRadius(newRadius);
       // only change results if position exists
-      if (position) {
+      if (position.lat && position.lng) {
         handleResultsChange(methodOfCalculation, newRadius, position);
       }
     },
