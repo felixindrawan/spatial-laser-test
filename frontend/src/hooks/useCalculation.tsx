@@ -34,7 +34,7 @@ export function CalculationProvider({ children }: { children: ReactNode }) {
 
   const handleResultsChange = useCallback(
     async (methodOfCalculation: Method, radius: number, position?: LatLng) => {
-      if (!position) {
+      if (!position?.lat || !position?.lng) {
         setTotalPopulation(0);
         setAvgIncome(0);
         handleFeaturesInCircleReset();
