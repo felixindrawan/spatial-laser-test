@@ -7,9 +7,9 @@ const pool = new Pool({
   user: process.env.DB_USERNAME,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
-  connectionString: `${process.env.DATABASE_URL}?sslmode=require`, // Use the DATABASE_URL from your Heroku config vars
+  connectionString: `${process.env.DATABASE_URL}`, // Use the DATABASE_URL from your Heroku config vars
   ssl: {
-    rejectUnauthorized: true // This should only be used for development
+    rejectUnauthorized: false // This should only be used for development
   }
 })
 
