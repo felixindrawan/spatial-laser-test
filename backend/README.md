@@ -41,6 +41,7 @@ docker-compose up
 ### Deploy with Heroku
 Need to use the container registry on Heroku, bc the deployment buildpack doesn't work for container stack
 ```
+heroku container:login
 heroku git:remote -a spatiallaser-test-backend
 docker ps
 heroku container:push web
