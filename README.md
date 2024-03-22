@@ -1,6 +1,6 @@
-# Spatial Laser Takehome Test
+# Demographic Harvesting
 
-Demographic Harvesting application for Spatial Laser's Takehome test
+Demographic Harvesting application for Spatial Laser
 
 ## Description
 
